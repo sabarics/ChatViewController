@@ -64,10 +64,10 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
                 return
             }
             if #available(iOS 11.0, *) {
-                guard let imagePath = info[UIImagePickerController.InfoKey.imageURL] as? URL else {
+                guard let imagePath = info[UIImagePickerController.InfoKey.imageURL] as? NSURL else {
                     return
                 }
-                delegate?.didSelectImage?(url: imagePath)
+                delegate?.didSelectImage?(url: imagePath as URL)
             } else {
                 DispatchQueue.main.async {
                     originalImage.storeToTemporaryDirectory(completion: { [weak self] (imagePath, error) in
@@ -80,10 +80,10 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
             }
             
         case kUTTypeMovie:
-            guard let videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+            guard let videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL else {
                 return
             }
-            delegate?.didSelectVideo?(url: videoPath)
+            delegate?.didSelectVideo?(url: videoPath as URL)
         default: break
         }
     }
