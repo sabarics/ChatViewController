@@ -93,11 +93,11 @@ class MessageViewController: ChatViewController {
         imagePickerHelper?.takeOrChoosePhoto()
     }
     
-    override func didSelectVideo(url: URL?) {
+    override func didSelectVideo(url: URL?,imageData:Data?) {
         print("URL \(url!)")
     }
     
-    override func didSelectImage(url: URL?) {
+    override func didSelectImage(url: URL?,imageData:Data?) {
         print("URL \(url!)")
     }
 }

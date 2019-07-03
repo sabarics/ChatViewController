@@ -308,11 +308,11 @@ open class ChatViewController: UIViewController, UITableViewDataSource, UITableV
         return true
     }
     
-    open func didSelectImage(url: URL?) {
+    open func didSelectImage(url: URL?,imageData:Data?) {
         
     }
     
-    open func didSelectVideo(url: URL?) {
+    open func didSelectVideo(url: URL?,imageData:Data?) {
         
     }
     
