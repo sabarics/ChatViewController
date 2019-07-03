@@ -29,7 +29,8 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = sourceType
-        imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        //imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        imagePicker.mediaTypes = [kUTTypeImage as String]
 
         parentViewController?.present(imagePicker, animated: true, completion: nil)
     }
@@ -65,16 +66,20 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
             }
             if #available(iOS 11.0, *) {
                 guard let imagePath = info[UIImagePickerController.InfoKey.imageURL] as? NSURL else {
+                    if originalImage != nil{
+                        
+                        delegate?.didSelectImage?(url: URL(string: "cameraImage.png"), imageData: originalImage.pngData())
+                    }
                     return
                 }
-                delegate?.didSelectImage?(url: imagePath as URL)
+                delegate?.didSelectImage?(url: imagePath as URL, imageData: originalImage.pngData())
             } else {
                 DispatchQueue.main.async {
                     originalImage.storeToTemporaryDirectory(completion: { [weak self] (imagePath, error) in
                         guard let imageURL = imagePath else {
                             return
                         }
-                        self?.delegate?.didSelectImage?(url: imageURL)
+                        self?.delegate?.didSelectImage?(url: imageURL, imageData: originalImage.pngData())
                     })
                 }
             }
@@ -82,8 +87,9 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
         case kUTTypeMovie:
             guard let videoPath = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL else {
                 return
+                    (delegate?.didSelectImage?(url: URL(string: "cameraVideo.mov"), imageData: nil))!
             }
-            delegate?.didSelectVideo?(url: videoPath as URL)
+            delegate?.didSelectVideo?(url: videoPath as URL, imageData: nil)
         default: break
         }
     }

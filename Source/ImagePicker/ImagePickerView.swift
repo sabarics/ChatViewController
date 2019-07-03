@@ -78,10 +78,10 @@ open class ImagePickerView: UIView {
 extension ImagePickerView: ImagePickerResultDelegate {
     
     public func didSelectImage(url: URL?) {
-        pickerDelegate?.didSelectImage?(url: url)
+        pickerDelegate?.didSelectImage?(url: url, imageData: nil)
     }
     
     public func didSelectVideo(url: URL?) {
-        pickerDelegate?.didSelectVideo?(url: url)
+        pickerDelegate?.didSelectVideo?(url: url, imageData: nil)
     }
 }

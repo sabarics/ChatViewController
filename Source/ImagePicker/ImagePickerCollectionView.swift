@@ -11,8 +11,8 @@ import Photos
 
 /// Image picker result
 @objc public protocol ImagePickerResultDelegate {
-    @objc optional func didSelectImage(url: URL?)
-    @objc optional func didSelectVideo(url: URL?)
+    @objc optional func didSelectImage(url: URL?,imageData:Data?)
+    @objc optional func didSelectVideo(url: URL?,imageData:Data?)
 }
 
 public final class ImagePickerCollectionView: UICollectionView {
@@ -179,11 +179,11 @@ extension ImagePickerCollectionView: UICollectionViewDelegate {
         switch asset.mediaType {
         case .video:
             MediaProcesser.storeVideoToURL(videoAsset: asset) { [weak self] (url, error) in
-                self?.pickerDelegate?.didSelectVideo?(url: url)
+                self?.pickerDelegate?.didSelectVideo?(url: url, imageData: nil)
             }
         case .image:
             MediaProcesser.storeImage(imageAsset: asset) { [weak self] (url, error) in
-                self?.pickerDelegate?.didSelectImage?(url: url)
+                self?.pickerDelegate?.didSelectImage?(url: url, imageData: nil)
             }
         default: break
         }
