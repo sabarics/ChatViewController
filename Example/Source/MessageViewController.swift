@@ -58,6 +58,7 @@ class MessageViewController: ChatViewController {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let chatCell = cell as! MessageCell
+        chatCell.nameLabel.text = ""
         let positionInBlock = viewModel.getPositionInBlockForMessageAtIndex(indexPath.row)
 
         chatCell.layoutIfNeeded()

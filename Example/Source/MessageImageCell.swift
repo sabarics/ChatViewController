@@ -53,7 +53,7 @@ class MessageImageCell: MessageCell {
     override func bind(withMessage message: Message, user: User) {
         attachImageView.setImage(with: message.file?.previewURL)
         avatarImageView.setImage(with: user.avatarURL)
-
+        nameLabel.text = user.name
         updateImage(width: message.file!.width, height: message.file!.height)
         tranformUI(message.isOutgoing)
     }

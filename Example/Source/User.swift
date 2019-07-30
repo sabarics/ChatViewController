@@ -12,7 +12,7 @@ import ChatViewController
 struct User: Userable, Mappable {
 
     var id: Int!
-    var name: String = ""
+    var name: String = "Sabarinathan"
     var avatarURL: URL?
 
     var idNumber: String {

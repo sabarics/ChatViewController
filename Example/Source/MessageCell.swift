@@ -28,6 +28,8 @@ class MessageCell: UITableViewCell {
     var statusSpaceView: UIView!
     var statusStackView: UIStackView!
     var innerStackView: UIStackView!
+    var nameView: UIStackView!
+    var nameLabel: UILabel!
 
     var contentTranform: CGAffineTransform!
     var topAnchorContentView: NSLayoutConstraint!
@@ -64,10 +66,18 @@ class MessageCell: UITableViewCell {
         statusLabel.font = UIFont.systemFont(ofSize: 14)
         statusLabel.textColor = .gray
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameLabel = UILabel()
+        nameLabel.text = "Seen"
+        nameLabel.font = UIFont.systemFont(ofSize: 12)
+        nameLabel.textColor = .gray
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+     //   nameLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
 
         statusSpaceView = UIView()
         statusSpaceView.translatesAutoresizingMaskIntoConstraints = false
-        statusSpaceView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        statusSpaceView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+       // statusSpaceView.addSubview(nameLabel)
 
         statusStackView = UIStackView(arrangedSubviews: [statusSpaceView, statusLabel])
         statusStackView.spacing = 8
@@ -77,11 +87,14 @@ class MessageCell: UITableViewCell {
 
         /// Avatar
         avatarContainerView = UIView()
+        avatarContainerView.backgroundColor = UIColor.red
+        avatarContainerView.layer.cornerRadius = 20
+        avatarContainerView.layer.masksToBounds = true
         avatarContainerView.translatesAutoresizingMaskIntoConstraints = false
-        let avatarWidthConstraint = avatarContainerView.widthAnchor.constraint(equalToConstant: 32)
+        let avatarWidthConstraint = avatarContainerView.widthAnchor.constraint(equalToConstant: 40)
         avatarWidthConstraint.isActive = true
         avatarWidthConstraint.priority = .defaultHigh + 1
-        let avatarHeightConstraint = avatarContainerView.heightAnchor.constraint(equalToConstant: 32)
+        let avatarHeightConstraint = avatarContainerView.heightAnchor.constraint(equalToConstant: 40)
         avatarHeightConstraint.isActive = true
         avatarHeightConstraint.priority = .defaultHigh + 1
 
@@ -95,8 +108,13 @@ class MessageCell: UITableViewCell {
         avatarImageView.leadingAnchor.constraint(equalTo: avatarContainerView.leadingAnchor).isActive = true
         avatarImageView.trailingAnchor.constraint(equalTo: avatarContainerView.trailingAnchor).isActive = true
 
+        nameView = UIStackView(arrangedSubviews: [roundedView,nameLabel])
+        nameView.spacing = 8
+        nameView.axis = .vertical
+        nameView.alignment = .fill
+        nameView.translatesAutoresizingMaskIntoConstraints = false
         /// Group of avatarContainerView and roundedView
-        innerStackView = UIStackView(arrangedSubviews: [avatarContainerView, roundedView])
+        innerStackView = UIStackView(arrangedSubviews: [avatarContainerView, nameView])
         innerStackView.spacing = 8
         innerStackView.axis = .horizontal
         innerStackView.alignment = .bottom
@@ -148,7 +166,7 @@ class MessageCell: UITableViewCell {
         case (.facebook, .bottom), (_, .single), (.instagram, .top):
             avatarImageView.isHidden = false
         case (.facebook, .top), (_, .center), (.instagram, .bottom):
-            avatarImageView.isHidden = true
+            avatarImageView.isHidden = false
         }
     }
     
@@ -186,13 +204,17 @@ class MessageCell: UITableViewCell {
             layoutForOutgoingMessage()
             contentTranform = CGAffineTransform(scaleX: -1, y: -1)
             statusLabel.textAlignment = .right
+            nameLabel.textAlignment = .right
+            //nameLabel.isHidden = true
         } else {
             layoutForIncomingMessage()
             contentTranform = CGAffineTransform(scaleX: 1, y: -1)
             statusLabel.textAlignment = .left
+            nameLabel.textAlignment = .left
         }
         contentView.transform = contentTranform
         statusLabel.transform = contentTranform
+        nameLabel.transform = contentTranform
         avatarImageView.transform = contentTranform
     }
 }
