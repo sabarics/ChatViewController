@@ -13,7 +13,7 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Kingfisher
     - ObjectMapper
     - PlaceholderUITextView
@@ -32,4 +32,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d779e327654b3ad61badf7cba2ebd44c2e838f08
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.9.1
