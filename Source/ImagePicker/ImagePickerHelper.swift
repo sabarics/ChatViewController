@@ -29,8 +29,8 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = sourceType
-        //imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
-        imagePicker.mediaTypes = [kUTTypeImage as String]
+        imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+       // imagePicker.mediaTypes = [kUTTypeImage as String]
 
         parentViewController?.present(imagePicker, animated: true, completion: nil)
     }
@@ -49,6 +49,11 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
             self?.accessLibrary()
         }
         alert.addAction(choosePhoto)
+        
+        let chooseVideo = UIAlertAction(title: "Choose Video", style: .default) { [weak self] _ in
+            self?.accessVideo()
+        }
+        alert.addAction(chooseVideo)
         
         parentViewController?.present(alert, animated: true, completion: nil)
     }
@@ -102,6 +107,12 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
     
     public func accessLibrary() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            accessPhoto(from: .photoLibrary)
+        }
+    }
+    
+    public func accessVideo() {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             accessPhoto(from: .photoLibrary)
         }
     }
