@@ -35,12 +35,21 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
         parentViewController?.present(imagePicker, animated: true, completion: nil)
     }
     
+    public func openVideoGallery() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .savedPhotosAlbum
+        picker.mediaTypes = ["public.movie"]
+        picker.allowsEditing = false
+        parentViewController?.present(picker, animated: true, completion: nil)
+    }
+    
     /// Show Action Sheet to select
     public func takeOrChoosePhoto() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        let takePhoto = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
+        let takePhoto = UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
             self?.accessCamera()
         }
         alert.addAction(takePhoto)
@@ -113,7 +122,7 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
     
     public func accessVideo() {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
-            accessPhoto(from: .photoLibrary)
+            openVideoGallery()
         }
     }
     
