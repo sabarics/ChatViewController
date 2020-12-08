@@ -32,7 +32,7 @@ public struct ChatViewConfiguration {
     // Deselected color for send button
     public var sendButtonDeSelectedColor = UIColor(red: 228/255, green: 228/255, blue: 228/255, alpha: 1)
     // Deselected color for gallery button
-    public var galleryButtonDeSelectedColor: UIColor = UIColor(red: 160/255, green: 160/255, blue: 160/255, alpha: 1)
+    public var galleryButtonDeSelectedColor: UIColor = .systemBlue
     // Border color for text input bar
     public var textInputBarBorderColor: UIColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
     // Background color for chat bar

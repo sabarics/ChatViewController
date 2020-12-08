@@ -210,6 +210,10 @@ open class ChatViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    @objc open func didPressAudioButton(_ sender: Any?){
+        chatBarView.textView.text = ""
+    }
+    
     /// Set hide/show for ChatBarView
     open func setChatBarHidden(_ hidden: Bool, animated: Bool) {
         if _isChatBarHidden == hidden { return }
@@ -289,7 +293,15 @@ open class ChatViewController: UIViewController, UITableViewDataSource, UITableV
         switch configuration.chatBarStyle {
         case .default:
             UIView.animate(withDuration: 0.15) {
-                self.chatBarView.rightStackView.isHidden = textView.text.isEmpty
+                if textView.text.isEmpty{
+                    //Show AudioButton
+                    self.chatBarView.setStackViewItems([self.chatBarView.audioButton], forStack: .right, animated: false)
+                    self.chatBarView.rightStackView.isHidden = false
+                }
+                else{
+                    self.chatBarView.setStackViewItems([self.chatBarView.sendButton], forStack: .right, animated: false)
+                    self.chatBarView.rightStackView.isHidden = textView.text.isEmpty
+                }
             }
         case .slack:
             chatBarView.sendButton.isEnabled = !textView.text.isEmpty
@@ -368,6 +380,7 @@ extension ChatViewController {
         }
 
         chatBarView.sendButton.addTarget(self, action: #selector(didPressSendButton(_:)), for: .touchUpInside)
+        chatBarView.audioButton.addTarget(self, action: #selector(didPressAudioButton(_:)), for: .touchUpInside)
         chatBarView.galleryButton.addTarget(self, action: #selector(didPressGalleryButton(_:)), for: .touchUpInside)
         chatBarView.bottomStackView.isHidden = false
         chatBarView.leftStackView.isHidden = true
@@ -380,7 +393,7 @@ extension ChatViewController {
 
     private func defaultChatBarStyle() {
         // Hide send button default (we will hide right stack view)
-        chatBarView.rightStackView.isHidden = true
+        chatBarView.rightStackView.isHidden = false
         chatBarView.backgroundColor = configuration.chatBarBackgroundColor
         chatBarView.textView.backgroundColor = .white
 
@@ -418,11 +431,34 @@ extension ChatViewController {
                     $0.tintColor = self?.configuration.galleryButtonDeSelectedColor
                 }
         }
+        
+        chatBarView.audioButton
+            .configure { [weak self] in
+                $0.size = CGSize(width: 32, height: 38)
+                var image = UIImage(named: "ic_audio", in: Bundle.chatBundle, compatibleWith: nil)
+                if let tempImage = image?.withRenderingMode(.alwaysTemplate) {
+                    image = tempImage
+                    $0.image = image
+                    $0.tintColor = self?.configuration.galleryButtonDeSelectedColor
+                }
+            }
+            .onSelected {
+                $0.image = UIImage(named: "ic_audio", in: Bundle.chatBundle, compatibleWith: nil)
+            }
+            .onDeselected { [weak self] in
+                var image = UIImage(named: "ic_audio", in: Bundle.chatBundle, compatibleWith: nil)
+                if let tempImage = image?.withRenderingMode(.alwaysTemplate) {
+                    image = tempImage
+                    $0.image = image
+                    $0.tintColor = self?.configuration.galleryButtonDeSelectedColor
+                }
+        }
 
         chatBarView.sendButton.addTarget(self, action: #selector(didPressSendButton(_:)), for: .touchUpInside)
         chatBarView.galleryButton.addTarget(self, action: #selector(didPressGalleryButton(_:)), for: .touchUpInside)
+        chatBarView.audioButton.addTarget(self, action: #selector(didPressAudioButton(_:)), for: .touchUpInside)
 
         chatBarView.setStackViewItems([chatBarView.galleryButton], forStack: .left, animated: false)
-        chatBarView.setStackViewItems([chatBarView.sendButton], forStack: .right, animated: false)
+        chatBarView.setStackViewItems([chatBarView.audioButton], forStack: .right, animated: false)
     }
 }

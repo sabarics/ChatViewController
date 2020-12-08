@@ -50,6 +50,19 @@ open class ChatBarView: UIView {
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
         return sendButton
     }()
+    
+    open var audioButton: ChatButton = {
+        let audioButton = ChatButton()
+        audioButton.isEnabled = true
+        if let image = UIImage(named: "ic_audio"){
+            var imageObj = image
+            let tempImage = image.withRenderingMode(.alwaysTemplate)
+            imageObj = tempImage
+            audioButton.image = imageObj
+        }
+        audioButton.tintColor = UIColor.systemBlue
+        return audioButton
+    }()
 
     open var galleryButton: ChatButton = {
         let galleryButton = ChatButton()
@@ -60,7 +73,7 @@ open class ChatBarView: UIView {
             imageObj = tempImage
             galleryButton.image = imageObj
         }
-        galleryButton.tintColor = UIColor.gray
+        galleryButton.tintColor = UIColor.systemBlue
         return galleryButton
     }()
 
@@ -95,6 +108,8 @@ open class ChatBarView: UIView {
         super.init(frame : frame)
         setUI()
     }
+    
+    public var isUserEntered: Bool = false
 
     open override func awakeFromNib() {
         super.awakeFromNib()

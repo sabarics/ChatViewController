@@ -94,6 +94,10 @@ class MessageViewController: ChatViewController {
         imagePickerHelper?.takeOrChoosePhoto()
     }
     
+    override func didPressAudioButton(_ sender: Any?) {
+        
+    }
+    
     override func didSelectVideo(url: URL?,imageData:Data?) {
         print("URL \(url!)")
     }
