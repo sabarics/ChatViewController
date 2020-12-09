@@ -84,4 +84,8 @@ extension ImagePickerView: ImagePickerResultDelegate {
     public func didSelectVideo(url: URL?) {
         pickerDelegate?.didSelectVideo?(url: url, imageData: nil)
     }
+    
+    public func didSelectDocumet(url: URL?, documentData: Data?) {
+        pickerDelegate?.didSelectDocumet?(url: url, documentData: documentData)
+    }
 }

@@ -105,6 +105,10 @@ class MessageViewController: ChatViewController {
     override func didSelectImage(url: URL?,imageData:Data?) {
         print("URL \(url!)")
     }
+    
+    override func didSelectDocumet(url: URL?,documentData:Data?){
+        print("URL \(url!)")
+    }
 }
 
 extension MessageViewController {
@@ -178,6 +182,7 @@ extension MessageViewController {
         
         imagePickerHelper = ImagePickerHelper()
         imagePickerHelper?.delegate = self
+        imagePickerHelper?.chatInstance = self
         imagePickerHelper?.parentViewController = self
     }
 

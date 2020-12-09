@@ -19,10 +19,11 @@ public protocol ImagePickerHelperable {
     func accessLibrary()
 }
 
-public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate {
 
     public weak var parentViewController: UIViewController?
     public weak var delegate: ImagePickerResultDelegate?
+    public weak var chatInstance: ChatViewController?
 
     public func accessPhoto(from sourceType: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
@@ -44,6 +45,20 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
         parentViewController?.present(picker, animated: true, completion: nil)
     }
     
+    public func openDocument(){
+        
+        var valueType: [String] = []
+        
+        let value1 = [String(kUTTypePDF),String(kUTTypeImage),String(kUTTypeBMP),String(kUTTypeAudio)]
+        valueType.append(contentsOf: value1)
+        
+        let documentPickerController = UIDocumentPickerViewController(documentTypes:valueType, in: .import)
+        documentPickerController.delegate = self
+        documentPickerController.navigationController?.navigationBar.topItem?.title = "Files"
+        documentPickerController.navigationController?.navigationBar.tintColor = ChatViewConfiguration.default.documentPickerNavBarTintColor
+        parentViewController?.present(documentPickerController, animated: true, completion: nil)
+    }
+    
     /// Show Action Sheet to select
     public func takeOrChoosePhoto() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -63,6 +78,15 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
             self?.accessVideo()
         }
         alert.addAction(chooseVideo)
+        
+        if let chatVC = chatInstance{
+            if chatVC.configuration.showDocumentAttachment{
+                let chooseDocument = UIAlertAction(title: "Choose Document", style: .default) { [weak self] _ in
+                    self?.openDocument()
+                }
+                alert.addAction(chooseDocument)
+            }
+        }
         
         parentViewController?.present(alert, animated: true, completion: nil)
     }
@@ -123,6 +147,21 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
     public func accessVideo() {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             openVideoGallery()
+        }
+    }
+    
+    //MARK:- Document picker delegates
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL)
+    {
+        
+        if let getData = NSData(contentsOf: url)
+        {
+            var fileSize = Float(getData.length)
+            fileSize = fileSize/(1024*1024)
+            delegate?.didSelectDocumet?(url: url, documentData: getData as Data)
+        }
+        else if url != nil{
+            delegate?.didSelectDocumet?(url: url, documentData: nil)
         }
     }
     

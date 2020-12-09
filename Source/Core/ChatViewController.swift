@@ -294,9 +294,12 @@ open class ChatViewController: UIViewController, UITableViewDataSource, UITableV
         case .default:
             UIView.animate(withDuration: 0.15) {
                 if textView.text.isEmpty{
-                    //Show AudioButton
-                    self.chatBarView.setStackViewItems([self.chatBarView.audioButton], forStack: .right, animated: false)
-                    self.chatBarView.rightStackView.isHidden = false
+                    self.chatBarView.rightStackView.isHidden = true
+                    if self.configuration.isAudioChatEnabled{
+                        //Show AudioButton
+                        self.chatBarView.setStackViewItems([self.chatBarView.audioButton], forStack: .right, animated: false)
+                        self.chatBarView.rightStackView.isHidden = false
+                    }
                 }
                 else{
                     self.chatBarView.setStackViewItems([self.chatBarView.sendButton], forStack: .right, animated: false)
@@ -325,6 +328,10 @@ open class ChatViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     open func didSelectVideo(url: URL?,imageData:Data?) {
+        
+    }
+    
+    open func didSelectDocumet(url: URL?, documentData: Data?) {
         
     }
     
@@ -393,10 +400,15 @@ extension ChatViewController {
 
     private func defaultChatBarStyle() {
         // Hide send button default (we will hide right stack view)
-        chatBarView.rightStackView.isHidden = false
+        if self.configuration.isAudioChatEnabled{
+            chatBarView.rightStackView.isHidden = false
+        }
+        else{
+            chatBarView.rightStackView.isHidden = true
+        }
         chatBarView.backgroundColor = configuration.chatBarBackgroundColor
         chatBarView.textView.backgroundColor = .white
-
+        
         // Set up border for textview
         chatBarView.textView.layer.cornerRadius = 6
         chatBarView.textView.layer.borderWidth = 1
@@ -409,7 +421,7 @@ extension ChatViewController {
                 $0.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
             }
         chatBarView.sendButton.isEnabled = true
-
+        
         chatBarView.galleryButton
             .configure { [weak self] in
                 $0.size = CGSize(width: 32, height: 38)
@@ -430,7 +442,7 @@ extension ChatViewController {
                     $0.image = image
                     $0.tintColor = self?.configuration.galleryButtonDeSelectedColor
                 }
-        }
+            }
         
         chatBarView.audioButton
             .configure { [weak self] in
@@ -452,12 +464,12 @@ extension ChatViewController {
                     $0.image = image
                     $0.tintColor = self?.configuration.galleryButtonDeSelectedColor
                 }
-        }
-
+            }
+        
         chatBarView.sendButton.addTarget(self, action: #selector(didPressSendButton(_:)), for: .touchUpInside)
         chatBarView.galleryButton.addTarget(self, action: #selector(didPressGalleryButton(_:)), for: .touchUpInside)
         chatBarView.audioButton.addTarget(self, action: #selector(didPressAudioButton(_:)), for: .touchUpInside)
-
+        
         chatBarView.setStackViewItems([chatBarView.galleryButton], forStack: .left, animated: false)
         chatBarView.setStackViewItems([chatBarView.audioButton], forStack: .right, animated: false)
     }

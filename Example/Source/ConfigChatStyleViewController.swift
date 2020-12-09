@@ -103,6 +103,8 @@ class ConfigChatStyleViewController: UIViewController {
         var configuration = ChatViewConfiguration.default
         configuration.chatBarStyle = chatBarStyle
         configuration.imagePickerType = imagePickerType
+        configuration.isAudioChatEnabled = false
+        configuration.showDocumentAttachment = true
         messageVC.configuration = configuration
 
         navigationController?.pushViewController(messageVC, animated: true)

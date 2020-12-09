@@ -21,7 +21,7 @@ public enum ImagePickerType {
 }
 
 public struct ChatViewConfiguration {
-
+    
     public var chatBarStyle: ChatBarStyle = .default
     // Use Image Picker or not. Default value is true
     public var imagePickerType: ImagePickerType = .slack
@@ -37,6 +37,9 @@ public struct ChatViewConfiguration {
     public var textInputBarBorderColor: UIColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
     // Background color for chat bar
     public var chatBarBackgroundColor: UIColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
-    
+    public var documentPickerNavBarTintColor : UIColor = .systemBlue
+    public var attachmentMaxUploadSize: Int = 20
+    public var isAudioChatEnabled: Bool = false
+    public var showDocumentAttachment: Bool = false
     public static var `default`: ChatViewConfiguration { return ChatViewConfiguration() }
 }

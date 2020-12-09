@@ -13,6 +13,7 @@ import Photos
 @objc public protocol ImagePickerResultDelegate {
     @objc optional func didSelectImage(url: URL?,imageData:Data?)
     @objc optional func didSelectVideo(url: URL?,imageData:Data?)
+    @objc optional func didSelectDocumet(url: URL?,documentData:Data?)
 }
 
 public final class ImagePickerCollectionView: UICollectionView {
