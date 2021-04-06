@@ -406,6 +406,9 @@ extension ChatViewController {
         else{
             chatBarView.rightStackView.isHidden = true
         }
+        chatBarView.rightStackView.isHidden = self.configuration.isAudioChatEnabled ? false : true
+        chatBarView.leftStackView.isHidden = self.configuration.isAttachmentEnabled ? false : true
+        
         chatBarView.backgroundColor = configuration.chatBarBackgroundColor
         chatBarView.textView.backgroundColor = .white
         

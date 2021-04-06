@@ -40,6 +40,7 @@ public struct ChatViewConfiguration {
     public var documentPickerNavBarTintColor : UIColor = .systemBlue
     public var attachmentMaxUploadSize: Int = 20
     public var isAudioChatEnabled: Bool = false
+    public var isAttachmentEnabled: Bool = false
     public var showDocumentAttachment: Bool = false
     public static var `default`: ChatViewConfiguration { return ChatViewConfiguration() }
 }
