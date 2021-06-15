@@ -61,34 +61,36 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
     
     /// Show Action Sheet to select
     public func takeOrChoosePhoto() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: ChatViewConfiguration.default.cancelTitle, style: .cancel))
-        
-        let takePhoto = UIAlertAction(title: ChatViewConfiguration.default.chooseCameraTitle, style: .default) { [weak self] _ in
-            self?.accessCamera()
-        }
-        alert.addAction(takePhoto)
-        
-        let choosePhoto = UIAlertAction(title: ChatViewConfiguration.default.choosePhotoTitle, style: .default) { [weak self] _ in
-            self?.accessLibrary()
-        }
-        alert.addAction(choosePhoto)
-        
-        let chooseVideo = UIAlertAction(title: ChatViewConfiguration.default.chooseVideoTitle, style: .default) { [weak self] _ in
-            self?.accessVideo()
-        }
-        alert.addAction(chooseVideo)
-        
         if let chatVC = chatInstance{
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: chatVC.configuration.cancelTitle, style: .cancel))
+            
+            let takePhoto = UIAlertAction(title: chatVC.configuration.chooseCameraTitle, style: .default) { [weak self] _ in
+                self?.accessCamera()
+            }
+            alert.addAction(takePhoto)
+            
+            let choosePhoto = UIAlertAction(title: chatVC.configuration.choosePhotoTitle, style: .default) { [weak self] _ in
+                self?.accessLibrary()
+            }
+            alert.addAction(choosePhoto)
+            
+            let chooseVideo = UIAlertAction(title: chatVC.configuration.chooseVideoTitle, style: .default) { [weak self] _ in
+                self?.accessVideo()
+            }
+            alert.addAction(chooseVideo)
+            
             if chatVC.configuration.showDocumentAttachment{
-                let chooseDocument = UIAlertAction(title: ChatViewConfiguration.default.chooseDocumentTitle, style: .default) { [weak self] _ in
+                let chooseDocument = UIAlertAction(title: chatVC.configuration.chooseDocumentTitle, style: .default) { [weak self] _ in
                     self?.openDocument()
                 }
                 alert.addAction(chooseDocument)
             }
+            
+            
+            parentViewController?.present(alert, animated: true, completion: nil)
         }
-        
-        parentViewController?.present(alert, animated: true, completion: nil)
     }
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
