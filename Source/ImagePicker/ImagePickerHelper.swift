@@ -62,26 +62,26 @@ public class ImagePickerHelper: NSObject, ImagePickerHelperable, UIImagePickerCo
     /// Show Action Sheet to select
     public func takeOrChoosePhoto() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: ChatViewConfiguration.default.cancelTitle, style: .cancel))
         
-        let takePhoto = UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
+        let takePhoto = UIAlertAction(title: ChatViewConfiguration.default.chooseCameraTitle, style: .default) { [weak self] _ in
             self?.accessCamera()
         }
         alert.addAction(takePhoto)
         
-        let choosePhoto = UIAlertAction(title: "Choose Photo", style: .default) { [weak self] _ in
+        let choosePhoto = UIAlertAction(title: ChatViewConfiguration.default.choosePhotoTitle, style: .default) { [weak self] _ in
             self?.accessLibrary()
         }
         alert.addAction(choosePhoto)
         
-        let chooseVideo = UIAlertAction(title: "Choose Video", style: .default) { [weak self] _ in
+        let chooseVideo = UIAlertAction(title: ChatViewConfiguration.default.chooseVideoTitle, style: .default) { [weak self] _ in
             self?.accessVideo()
         }
         alert.addAction(chooseVideo)
         
         if let chatVC = chatInstance{
             if chatVC.configuration.showDocumentAttachment{
-                let chooseDocument = UIAlertAction(title: "Choose Document", style: .default) { [weak self] _ in
+                let chooseDocument = UIAlertAction(title: ChatViewConfiguration.default.chooseDocumentTitle, style: .default) { [weak self] _ in
                     self?.openDocument()
                 }
                 alert.addAction(chooseDocument)

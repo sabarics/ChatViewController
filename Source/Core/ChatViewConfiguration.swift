@@ -43,4 +43,12 @@ public struct ChatViewConfiguration {
     public var isAttachmentEnabled: Bool = false
     public var showDocumentAttachment: Bool = false
     public static var `default`: ChatViewConfiguration { return ChatViewConfiguration() }
+    
+    //Attachment Titles
+    public var cancelTitle: String = "Cancel"
+    public var filesTitle: String = "Files"
+    public var choosePhotoTitle: String = "Choose Photo"
+    public var chooseVideoTitle: String = "Choose Video"
+    public var chooseDocumentTitle: String = "Choose Document"
+    public var chooseCameraTitle: String = "Camera"
 }

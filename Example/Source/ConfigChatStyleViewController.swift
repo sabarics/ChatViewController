@@ -105,7 +105,7 @@ class ConfigChatStyleViewController: UIViewController {
         configuration.imagePickerType = imagePickerType
         configuration.isAudioChatEnabled = false
         configuration.showDocumentAttachment = true
-        configuration.isAttachmentEnabled = false
+        configuration.isAttachmentEnabled = true
         messageVC.configuration = configuration
         
 

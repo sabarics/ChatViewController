@@ -21,7 +21,6 @@ class MessageViewController: ChatViewController {
         setupUI()
         setupData()
         bindViewModel()
-
         // Get user data firstly
         DispatchQueue.main.async { [weak self] in
             self?.viewModel.getUserData()

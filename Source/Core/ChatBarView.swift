@@ -46,8 +46,13 @@ open class ChatBarView: UIView {
     open var sendButton: ChatButton = {
         let sendButton = ChatButton()
         sendButton.isEnabled = false
-        sendButton.setTitle("Send", for: .normal)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
+        if let image = UIImage(named: "ic_send"){
+            var imageObj = image
+            let tempImage = image.withRenderingMode(.alwaysTemplate)
+            imageObj = tempImage
+            sendButton.image = imageObj
+        }
+        sendButton.tintColor = UIColor.systemBlue
         return sendButton
     }()
     
